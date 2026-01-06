@@ -6,13 +6,13 @@ export type MenuItem = {
 };
 
 export const primaryMenuItems: MenuItem[] = [
-  { to: "/", label: "Inicio", icon: "🏠", end: true },
-  { to: "/posts", label: "Posts", icon: "📝" },
-  { to: "/users", label: "Usuarios", icon: "👥" },
+  { to: "/", label: "Progreso", icon: "📊", end: true },
+  { to: "/posts", label: "Niveles", icon: "🏆" },
+  { to: "/users", label: "Periodos", icon: "📅" },
 ];
 
 export const secondaryMenuItems: MenuItem[] = [
-  { to: "/settings", label: "Configuración", icon: "⚙️" },
+  { to: "/settings", label: "Ajustes", icon: "⚙️" },
   { to: "/help", label: "Ayuda", icon: "❓" },
   { to: "/about", label: "Acerca de", icon: "ℹ️" },
 ];

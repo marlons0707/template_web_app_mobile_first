@@ -8,6 +8,7 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
+import { FaMedal } from "react-icons/fa";
 import { useTheme } from "next-themes";
 
 export function Header() {
@@ -41,15 +42,15 @@ export function Header() {
             placeItems="center"
             fontWeight="bold"
           >
-            💪
+            <FaMedal />
           </Box>
 
           <Box lineHeight="1.1">
             <Link asChild fontWeight="semibold">
-              <RouterLink to="/">Control de Hábitos</RouterLink>
+              <RouterLink to="/">Elévate</RouterLink>
             </Link>
             <Text fontSize="xs" color="fg.muted">
-              Logra tus objetivos
+              Progama de reconocimientos
             </Text>
           </Box>
         </HStack>
@@ -59,8 +60,8 @@ export function Header() {
         {/* Theme toggle (mobile + desktop) */}
         <Button
           onClick={toggleTheme}
-          variant="outline"
-          size="sm"
+          variant="ghost"
+          size="lg"
           aria-label="Cambiar tema"
         >
           {current === "dark" ? "☀️" : "🌙"}

@@ -86,7 +86,7 @@ export function BottomNav() {
               ⚙️
             </Box>
             <Text fontSize="xs" mt="1" fontWeight="medium">
-              Otros
+              Ajustes
             </Text>
           </Box>
         </Flex>

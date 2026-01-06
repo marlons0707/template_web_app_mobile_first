@@ -1,4 +1,4 @@
-import { Box, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
+import { Box, Spinner, Stack, Text } from "@chakra-ui/react";
 import { Page } from "@/components/Page";
 import { usePosts } from "@/hooks/usePosts";
 
