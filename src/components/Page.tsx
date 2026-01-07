@@ -29,7 +29,7 @@ export function Page({
   children,
 }: Props) {
   return (
-    <Box>
+    <Flex direction="column" height="100%">
       {/* Header */}
       <Flex
         align="start"
@@ -37,6 +37,7 @@ export function Page({
         gap="4"
         mb="4"
         wrap="wrap"
+        flexShrink={0}
       >
         <Box minW="0">
         {breadcrumbs?.length ? (
@@ -84,7 +85,7 @@ export function Page({
       </Flex>
 
       {/* Body */}
-      <Box>{children}</Box>
-    </Box>
+      <Box flex="1" overflow="auto">{children}</Box>
+    </Flex>
   );
 }

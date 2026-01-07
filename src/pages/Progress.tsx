@@ -1,5 +1,6 @@
 import { Tabs, Card, Text, HStack, VStack, Box } from "@chakra-ui/react";
 import { Page } from "@/components/Page";
+import { useState, useEffect } from "react";
 
 // Definición de colores por nivel
 const levelColors = {
@@ -57,7 +58,20 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percentage / 100) * circumference;
+  const targetOffset = circumference - (percentage / 100) * circumference;
+  
+  // Estado para controlar la animación
+  const [animatedOffset, setAnimatedOffset] = useState(circumference); // Empieza en 0% (círculo vacío)
+
+  // Efecto para animar el círculo cada vez que se monta el componente
+  useEffect(() => {
+    // Pequeño delay para asegurar que la animación se vea
+    const timer = setTimeout(() => {
+      setAnimatedOffset(targetOffset);
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, [targetOffset]);
 
   return (
     <Box position="relative" width={`${size}px`} height={`${size}px`}>
@@ -71,7 +85,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           stroke={trackColor}
           strokeWidth={strokeWidth}
         />
-        {/* Progress (progreso) */}
+        {/* Progress */}
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -80,10 +94,10 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           stroke={progressColor}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
+          strokeDashoffset={animatedOffset}
           strokeLinecap="round"
           style={{
-            transition: "stroke-dashoffset 0.5s ease",
+            transition: "stroke-dashoffset 1s ease-out",
           }}
         />
       </svg>
@@ -99,15 +113,56 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   );
 };
 
-export function Progreso() {
+// Componente para animar números
+interface AnimatedNumberProps {
+  value: number;
+  duration?: number;
+}
+
+const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ value, duration = 1000 }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    let startTime: number | null = null;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      // Usar easing function para suavizar la animación (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentValue = Math.floor(easeOut * value);
+      
+      setDisplayValue(currentValue);
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(value); // Asegurar el valor final exacto
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [value, duration]);
+
+  return <>{displayValue.toLocaleString()}</>;
+};
+
+export function Progress() {
   const currentLevel = "PLATA";
-  const currentPoints = 2986; // Valor numérico
-  const totalPointsForLevel = 4000; // Total de puntos necesarios para el nivel
-  const pointsToNextLevel = totalPointsForLevel - currentPoints;
+  const currentPoints = 11300; // Valor numérico
+  const goalPointsForNextLevel = 17000; // Total de puntos necesarios para el siguiente nivel
+  const pointsToNextLevel = goalPointsForNextLevel - currentPoints;
   const nextLevel = "Oro";
   
+  // Estado para rastrear cuándo se activa el tab para forzar re-animación
+  const [animationKey, setAnimationKey] = useState(0);
+  
   // Calcular el porcentaje de progreso
-  const progressPercentage = (currentPoints / totalPointsForLevel) * 100;
+  const progressPercentage = (currentPoints / goalPointsForNextLevel) * 100;
   
   // Obtener colores del nivel actual
   const levelConfig = levelColors[currentLevel as keyof typeof levelColors] || levelColors.BRONCE;
@@ -120,16 +175,17 @@ export function Progreso() {
       {/* Selector de periodo */}
       <Tabs.Root
         defaultValue="week_progress"
+        onValueChange={() => setAnimationKey(prev => prev + 1)}
       >
         <Tabs.List>
           <Tabs.Trigger value="week_progress">
-            Semana
+            Semana 3/4
           </Tabs.Trigger>
           <Tabs.Trigger value="cicle_progress">
-            Ciclo
+            Ciclo 1
           </Tabs.Trigger>
           <Tabs.Trigger value="season_progress">
-            Temporada
+            Temporada 1
           </Tabs.Trigger>
         </Tabs.List>
 
@@ -145,11 +201,12 @@ export function Progreso() {
             animationDuration: "120ms",
           }}
         >
-          <VStack gap={6}>
+          <VStack gap={4} width="100%" align="stretch">
             {/* Progreso actual */}
             <Card.Root 
               variant="elevated" 
               size="md"
+              width="100%"
               style={{
                 background: levelConfig.gradient,
                 color: levelConfig.textColor,
@@ -176,6 +233,7 @@ export function Progreso() {
                   </VStack>
 
                   <CircularProgress
+                    key={`week_progress_${animationKey}`}
                     percentage={progressPercentage}
                     size={150}
                     strokeWidth={8}
@@ -197,7 +255,7 @@ export function Progreso() {
                         color={levelConfig.textColor}
                         style={{ textShadow: levelConfig.textShadow }}
                       >
-                        {currentPoints.toLocaleString()}
+                        <AnimatedNumber key={`points_${animationKey}`} value={currentPoints} duration={1000} />
                       </Text>
                     </VStack>
                   </CircularProgress>
@@ -215,11 +273,45 @@ export function Progreso() {
               </Card.Body>
             </Card.Root>
 
-            {/* Progreso por niveles */}
-            <Card.Root variant="elevated">
-              <Card.Body>
+            {/* Hoy llevas */}
+            <Card.Root variant="outline" size="md" width="100%">
+              <Card.Body py={4} px={4}>
+                <VStack gap={2} align="stretch">
+                  <Text fontSize="md" fontWeight="semibold">
+                    🚀 Hoy llevas
+                  </Text>
+                  <Text fontSize="xl" fontWeight="bold" color="blue.500">
+                    +120 pts
+                  </Text>
+                </VStack>
               </Card.Body>
             </Card.Root>
+
+            {/* Último logro */}
+            <Card.Root variant="outline" size="md" width="100%">
+              <Card.Body py={4} px={4}>
+                <VStack gap={2} align="stretch">
+                  <Text fontSize="md" fontWeight="semibold">
+                    🎖️ Último logro
+                  </Text>
+                  <Text fontSize="xl" fontWeight="bold" color="green.500">
+                    +300 pts por asistencia perfecta
+                  </Text>
+                </VStack>
+              </Card.Body>
+            </Card.Root>
+
+            {/* Frase motivacional */}
+            <Card.Root variant="outline" size="md" width="100%">
+              <Card.Body py={4} px={4}>
+                <VStack gap={2} align="stretch">
+                  <Text fontSize="md" fontWeight="normal">
+                    "La única forma de hacer un gran trabajo es amar lo que haces." - Steve Jobs
+                  </Text>
+                </VStack>
+              </Card.Body>
+            </Card.Root>
+
           </VStack>
         </Tabs.Content>
 

@@ -45,12 +45,12 @@ export function Header() {
             <FaMedal />
           </Box>
 
-          <Box lineHeight="1.1">
+          <Box lineHeight="1.3">
             <Link asChild fontWeight="semibold">
-              <RouterLink to="/">Elévate</RouterLink>
+              <RouterLink to="/">ELEVATE</RouterLink>
             </Link>
-            <Text fontSize="xs" color="fg.muted">
-              Progama de reconocimientos
+            <Text fontSize="xs" color="fg.muted" fontStyle="italic">
+              Elévate con la fuerza de tu impulso
             </Text>
           </Box>
         </HStack>

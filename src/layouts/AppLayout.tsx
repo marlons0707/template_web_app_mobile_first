@@ -25,6 +25,8 @@ export function AppLayout() {
           flex="1"
           p={{ base: 4, md: 6 }}
           pb={{ base: 20, md: 6 }}  // 👈 espacio para BottomNav
+          display="flex"
+          flexDirection="column"
         >
           <Box
             bg="bg"
@@ -32,6 +34,10 @@ export function AppLayout() {
             borderRadius="xl"
             p={{ base: 4, md: 6 }}
             boxShadow="sm"
+            flex="1"
+            display="flex"
+            flexDirection="column"
+            overflow="auto"
           >
             <Outlet />
           </Box>
