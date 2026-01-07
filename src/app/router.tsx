@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "@/layouts/AppLayout";
 import { Progress } from "@/pages/Progress";
-import { Posts } from "@/pages/Posts";
+import { Levels } from "@/pages/Levels";
 import { Users } from "@/pages/Users";
 import { NotFound } from "@/pages/NotFound";
 
@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <Progress /> },
-      { path: "posts", element: <Posts /> },
+      { path: "levels", element: <Levels /> },
       { path: "users", element: <Users /> },
     ],
   },

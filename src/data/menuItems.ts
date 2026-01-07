@@ -7,7 +7,7 @@ export type MenuItem = {
 
 export const primaryMenuItems: MenuItem[] = [
   { to: "/", label: "Progreso", icon: "📊", end: true },
-  { to: "/posts", label: "Niveles", icon: "🏆" },
+  { to: "/levels", label: "Niveles", icon: "🏆" },
   { to: "/users", label: "Periodos", icon: "📅" },
 ];
 
