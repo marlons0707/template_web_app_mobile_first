@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { menuItems } from "@/data/menuItems";
 
 export function BottomNav() {
@@ -23,38 +23,34 @@ export function BottomNav() {
             {({ isActive }) => (
               <Box
                 position="relative"
-                p="4"
+                px="4"
+                py="2"
                 borderRadius="md"
                 display="flex"
+                flexDirection="column"
                 alignItems="center"
                 justifyContent="center"
                 color="white"
                 opacity={isActive ? 1 : 0.6}
                 transition="all 180ms ease"
-                transform={isActive ? "translateY(-2px)" : "translateY(0)"}
                 _hover={{ opacity: 1, bg: "rgba(255, 255, 255, 0.1)" }}
               >
-                {/* Indicador activo */}
                 <Box
-                  position="absolute"
-                  top="1"
-                  left="50%"
-                  transform="translateX(-50%)"
-                  h="1"
-                  w={isActive ? "10" : "2"}
-                  borderRadius="full"
-                  bg="white"
-                  opacity={isActive ? 1 : 0}
-                  transition="all 180ms ease"
-                />
-
-                <Box
-                  fontSize="3xl"
+                  fontSize="2xl"
                   lineHeight="1"
                   transition="transform 180ms ease"
-                  transform={isActive ? "scale(1.1)" : "scale(1)"}
+                  transform={isActive ? "scale(1.2)" : "scale(1)"}
                   as={it.icon}
                 />
+
+                <Text
+                  mt="0.5"
+                  fontWeight={isActive ? "semibold" : "medium"}
+                  transition="font-size 180ms ease"
+                  style={{ fontSize: isActive ? "14.5px" : "11.5px" }}
+                >
+                  {it.label}
+                </Text>
               </Box>
             )}
           </NavLink>

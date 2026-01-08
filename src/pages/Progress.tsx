@@ -1,6 +1,7 @@
 import { Tabs, Card, Text, HStack, VStack, Box } from "@chakra-ui/react";
 import { Page } from "@/components/Page";
 import { useState, useEffect } from "react";
+import { LuTrendingUp, LuAward } from "react-icons/lu";
 
 // Definición de colores por nivel
 const levelColors = {
@@ -22,19 +23,19 @@ const levelColors = {
   },
   ORO: {
     gradient: "linear-gradient(135deg, #FFD700 0%, #FFED4E 25%, #FFA500 50%, #FFD700 75%, #DAA520 100%)",
-    progressColor: "#FF8C00",
+    progressColor: "#DAA520",
     textColor: "#1a202c",
     textSecondary: "#2d3748",
     textMuted: "#4a5568",
     textShadow: "0 1px 2px rgba(255, 255, 255, 0.5)",
   },
   PLATINO: {
-    gradient: "linear-gradient(135deg, #E5E4E2 0%, #F5F5F5 25%, #BCC6CC 50%, #D8D8D8 75%, #A8B5BF 100%)",
-    progressColor: "#A8B5BF",
+    gradient: "linear-gradient(135deg, #E8E8E8 0%, #FFFFFF 25%, #D0E8F2 50%, #F0F8FF 75%, #C8D8E4 100%)",
+    progressColor: "#6B98C4",
     textColor: "#1a202c",
     textSecondary: "#2d3748",
     textMuted: "#4a5568",
-    textShadow: "0 1px 2px rgba(255, 255, 255, 0.5)",
+    textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
   },
 };
 
@@ -151,8 +152,11 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ value, duration = 1000 
   return <>{displayValue.toLocaleString()}</>;
 };
 
+// Tipo para los niveles
+type Level = keyof typeof levelColors;
+
 export function Progress() {
-  const currentLevel = "PLATA";
+  const currentLevel: Level = "PLATA";
   const currentPoints = 11300; // Valor numérico
   const goalPointsForNextLevel = 17000; // Total de puntos necesarios para el siguiente nivel
   const pointsToNextLevel = goalPointsForNextLevel - currentPoints;
@@ -164,8 +168,11 @@ export function Progress() {
   // Calcular el porcentaje de progreso
   const progressPercentage = (currentPoints / goalPointsForNextLevel) * 100;
   
+  // Verificar si está en nivel máximo
+  const isMaxLevel = (currentLevel as string) === "PLATINO";
+  
   // Obtener colores del nivel actual
-  const levelConfig = levelColors[currentLevel as keyof typeof levelColors] || levelColors.BRONCE;
+  const levelConfig = levelColors[currentLevel] || levelColors.BRONCE;
 
   return (
     <Page>
@@ -286,7 +293,12 @@ export function Progress() {
                     textAlign="center"
                     color={levelConfig.textSecondary}
                   >
-                    ¡Te faltan <Text as="span" fontWeight="bold" color={levelConfig.textColor}>{pointsToNextLevel.toLocaleString()}</Text> puntos para <Text as="span" fontWeight="bold" color={levelConfig.textColor}>{nextLevel}</Text>!
+                    {isMaxLevel
+                      ? <>Vas en el máximo nivel ¡Sigue así!</>
+                      : (
+                        <>¡Te faltan <Text as="span" fontWeight="bold" color={levelConfig.textColor}>{pointsToNextLevel.toLocaleString()}</Text> puntos para <Text as="span" fontWeight="bold" color={levelConfig.textColor}>{nextLevel}</Text>!</>
+                      )
+                    }
                   </Text>
                 </VStack>
 
@@ -295,29 +307,51 @@ export function Progress() {
 
             {/* Hoy llevas */}
             <Card.Root variant="elevated" size="md" width="97%" ml={1}>
-              <Card.Body py={5} px={5}>
-                <VStack gap={2} align="stretch">
-                  <Text fontSize="md" fontWeight="semibold" color="gray.600">
-                    🚀 Hoy llevas
-                  </Text>
-                  <Text fontSize="2xl" fontWeight="bold" color="blue.500">
-                    +120 pts
-                  </Text>
-                </VStack>
+              <Card.Body py={4} px={5}>
+                <HStack gap={3} align="center">
+                  <Box
+                    p="3"
+                    borderRadius="lg"
+                    bg="#A22A2E"
+                    color="white"
+                    fontSize="2xl"
+                  >
+                    <LuTrendingUp />
+                  </Box>
+                  <VStack gap={0} align="stretch">
+                    <Text fontSize="sm" fontWeight="medium" color="fg.muted">
+                      Hoy llevas
+                    </Text>
+                    <Text fontSize="2xl" fontWeight="bold" color="#A22A2E">
+                      +120 pts
+                    </Text>
+                  </VStack>
+                </HStack>
               </Card.Body>
             </Card.Root>
 
             {/* Último logro */}
             <Card.Root variant="elevated" size="md" width="97%" ml={1}>
-              <Card.Body py={5} px={5}>
-                <VStack gap={2} align="stretch">
-                  <Text fontSize="md" fontWeight="semibold" color="gray.600">
-                    🎖️ Último logro
-                  </Text>
-                  <Text fontSize="xl" fontWeight="bold" color="green.500">
-                    +300 pts por asistencia perfecta
-                  </Text>
-                </VStack>
+              <Card.Body py={4} px={5}>
+                <HStack gap={3} align="center">
+                  <Box
+                    p="3"
+                    borderRadius="lg"
+                    bg="#A22A2E"
+                    color="white"
+                    fontSize="2xl"
+                  >
+                    <LuAward />
+                  </Box>
+                  <VStack gap={0} align="stretch" flex="1">
+                    <Text fontSize="sm" fontWeight="medium" color="fg.muted">
+                      Último logro
+                    </Text>
+                    <Text fontSize="lg" fontWeight="bold" color="#A22A2E">
+                      +300 pts por asistencia perfecta
+                    </Text>
+                  </VStack>
+                </HStack>
               </Card.Body>
             </Card.Root>
 
@@ -325,10 +359,10 @@ export function Progress() {
             <Card.Root variant="subtle" size="md" width="97%" ml={1}>
               <Card.Body py={5} px={5}>
                 <VStack gap={2} align="stretch">
-                  <Text fontSize="md" fontStyle="italic" color="gray.700" lineHeight="tall">
+                  <Text fontSize="md" fontStyle="italic" color="fg" lineHeight="tall">
                     "La única forma de hacer un gran trabajo es amar lo que haces."
                   </Text>
-                  <Text fontSize="sm" color="gray.500" textAlign="right">
+                  <Text fontSize="sm" color="fg.muted" textAlign="right">
                     — Steve Jobs
                   </Text>
                 </VStack>
