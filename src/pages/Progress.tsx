@@ -168,12 +168,12 @@ export function Progress() {
   const levelConfig = levelColors[currentLevel as keyof typeof levelColors] || levelColors.BRONCE;
 
   return (
-    <Page
-      title=""
-      subtitle=""
-    >
-      {/* Selector de periodo */}
+    <Page>
+      {/* Tabs para seleccionar el periodo */}
       <Tabs.Root
+        mt={2}
+        size="sm"
+        variant="line"
         defaultValue="week_progress"
         onValueChange={() => setAnimationKey(prev => prev + 1)}
       >
@@ -182,14 +182,14 @@ export function Progress() {
             Semana 3/4
           </Tabs.Trigger>
           <Tabs.Trigger value="cicle_progress">
-            Ciclo 1
+            Ciclo 2/3
           </Tabs.Trigger>
           <Tabs.Trigger value="season_progress">
-            Temporada 1
+            Temporada 1/4
           </Tabs.Trigger>
         </Tabs.List>
 
-        {/* Progreso por semana */}
+        {/* Tab de progreso por semana */}
         <Tabs.Content
           value="week_progress"
           _open={{
@@ -201,53 +201,46 @@ export function Progress() {
             animationDuration: "120ms",
           }}
         >
-          <VStack gap={4} width="100%" align="stretch">
-            {/* Progreso actual */}
+          <VStack gap={5} width="100%" align="stretch">
+            {/* Card tipo tarjeta de crédito, puntos actuales */}
             <Card.Root 
               variant="elevated" 
               size="md"
-              width="100%"
+              width="97%"
+              ml={1}
               style={{
                 background: levelConfig.gradient,
                 color: levelConfig.textColor,
               }}
             >
-              <Card.Body py={3}>
-                <HStack gap={4} justify="space-between">
-                  <VStack gap={2} align="stretch">
-                    <Text 
-                      fontSize="sm" 
-                      color={levelConfig.textMuted}
-                      style={{ textShadow: levelConfig.textShadow }}
-                    >
-                      Nivel actual:
-                    </Text>
-                    <Text 
-                      fontSize="xl" 
-                      fontWeight="bold" 
-                      color={levelConfig.textColor}
-                      style={{ textShadow: levelConfig.textShadow }}
-                    >
-                      {currentLevel}
-                    </Text>
-                  </VStack>
-
-                  <CircularProgress
-                    key={`week_progress_${animationKey}`}
-                    percentage={progressPercentage}
-                    size={150}
-                    strokeWidth={8}
-                    progressColor={levelConfig.progressColor}
-                    trackColor={levelConfig.textColor === "white" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.15)"}
-                  >
-                    <VStack gap={0}>
+              <Card.Body py={3} px={5}>
+                <VStack gap={4} align="stretch">
+                  <HStack gap={4} justify="space-between">
+                    <VStack gap={0} align="stretch">
                       <Text 
                         fontSize="xs" 
                         color={levelConfig.textMuted}
-                        fontWeight="medium"
                         style={{ textShadow: levelConfig.textShadow }}
                       >
-                        Puntos
+                        8704
+                      </Text>
+                      <Text 
+                        textAlign="left"
+                        fontSize="xl" 
+                        fontWeight="bold" 
+                        fontStyle="italic"
+                        color={levelConfig.textColor}
+                        style={{ textShadow: levelConfig.textShadow }}
+                      >
+                        Wilmer Contreras
+                      </Text>
+                      <Text 
+                        mt={6}
+                        fontSize="xs" 
+                        color={levelConfig.textMuted}
+                        style={{ textShadow: levelConfig.textShadow }}
+                      >
+                        Nivel actual
                       </Text>
                       <Text 
                         fontSize="2xl" 
@@ -255,32 +248,59 @@ export function Progress() {
                         color={levelConfig.textColor}
                         style={{ textShadow: levelConfig.textShadow }}
                       >
-                        <AnimatedNumber key={`points_${animationKey}`} value={currentPoints} duration={1000} />
+                        {currentLevel}
                       </Text>
                     </VStack>
-                  </CircularProgress>
-                </HStack>
 
-                <VStack gap={1} mt={2}>
-                  <Text 
-                    fontSize="md" 
+                    <CircularProgress
+                      key={`week_progress_${animationKey}`}
+                      percentage={progressPercentage}
+                      size={150}
+                      strokeWidth={8}
+                      progressColor={levelConfig.progressColor}
+                      trackColor={levelConfig.textColor === "white" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.15)"}
+                    >
+                      <VStack gap={0}>
+                        <Text 
+                          fontSize="xs" 
+                          color={levelConfig.textMuted}
+                          fontWeight="medium"
+                          style={{ textShadow: levelConfig.textShadow }}
+                        >
+                          Puntos
+                        </Text>
+                        <Text 
+                          fontSize="2xl" 
+                          fontWeight="bold" 
+                          color={levelConfig.textColor}
+                          style={{ textShadow: levelConfig.textShadow }}
+                        >
+                          <AnimatedNumber key={`points_${animationKey}`} value={currentPoints} duration={1000} />
+                        </Text>
+                      </VStack>
+                    </CircularProgress>
+                  </HStack>
+
+                  <Text
+                    fontSize="sm" 
+                    textAlign="center"
                     color={levelConfig.textSecondary}
-                    style={{ textShadow: levelConfig.textShadow }}
                   >
                     ¡Te faltan <Text as="span" fontWeight="bold" color={levelConfig.textColor}>{pointsToNextLevel.toLocaleString()}</Text> puntos para <Text as="span" fontWeight="bold" color={levelConfig.textColor}>{nextLevel}</Text>!
                   </Text>
                 </VStack>
+
               </Card.Body>
             </Card.Root>
 
             {/* Hoy llevas */}
-            <Card.Root variant="outline" size="md" width="100%">
-              <Card.Body py={4} px={4}>
+            <Card.Root variant="elevated" size="md" width="97%" ml={1}>
+              <Card.Body py={5} px={5}>
                 <VStack gap={2} align="stretch">
-                  <Text fontSize="md" fontWeight="semibold">
+                  <Text fontSize="md" fontWeight="semibold" color="gray.600">
                     🚀 Hoy llevas
                   </Text>
-                  <Text fontSize="xl" fontWeight="bold" color="blue.500">
+                  <Text fontSize="2xl" fontWeight="bold" color="blue.500">
                     +120 pts
                   </Text>
                 </VStack>
@@ -288,10 +308,10 @@ export function Progress() {
             </Card.Root>
 
             {/* Último logro */}
-            <Card.Root variant="outline" size="md" width="100%">
-              <Card.Body py={4} px={4}>
+            <Card.Root variant="elevated" size="md" width="97%" ml={1}>
+              <Card.Body py={5} px={5}>
                 <VStack gap={2} align="stretch">
-                  <Text fontSize="md" fontWeight="semibold">
+                  <Text fontSize="md" fontWeight="semibold" color="gray.600">
                     🎖️ Último logro
                   </Text>
                   <Text fontSize="xl" fontWeight="bold" color="green.500">
@@ -302,11 +322,14 @@ export function Progress() {
             </Card.Root>
 
             {/* Frase motivacional */}
-            <Card.Root variant="outline" size="md" width="100%">
-              <Card.Body py={4} px={4}>
+            <Card.Root variant="subtle" size="md" width="97%" ml={1}>
+              <Card.Body py={5} px={5}>
                 <VStack gap={2} align="stretch">
-                  <Text fontSize="md" fontWeight="normal">
-                    "La única forma de hacer un gran trabajo es amar lo que haces." - Steve Jobs
+                  <Text fontSize="md" fontStyle="italic" color="gray.700" lineHeight="tall">
+                    "La única forma de hacer un gran trabajo es amar lo que haces."
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" textAlign="right">
+                    — Steve Jobs
                   </Text>
                 </VStack>
               </Card.Body>
@@ -315,7 +338,10 @@ export function Progress() {
           </VStack>
         </Tabs.Content>
 
+        {/* Tab de progreso por ciclo */} 
         <Tabs.Content value="cicle_progress">Progreso por ciclo (4 semanas)</Tabs.Content>
+
+        {/* Tab de progreso por temporada */}
         <Tabs.Content value="season_progress">Progreso por temporada (12 semanas)</Tabs.Content>
 
       </Tabs.Root>

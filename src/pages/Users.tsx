@@ -4,12 +4,10 @@ import { Page } from "@/components/Page";
 export function Users() {
   return (
     <Page
-      title="Usuarios"
-      subtitle="Base para tabla, búsqueda y detalle."
-      breadcrumbs={[{ label: "Inicio", to: "/" }, { label: "Usuarios" }]}
-      actions={<Button size="sm">Nuevo usuario</Button>}
+      title="Periodos de puntos"
+      subtitle="Acá podrás ver los periodos en los que se acumulan los puntos a lo largo del tiempo."
     >
-      <Text color="fg.muted">Placeholder.</Text>
+      <Text color="fg.muted"></Text>
     </Page>
   );
 }

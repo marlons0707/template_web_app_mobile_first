@@ -1,25 +1,13 @@
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
-  Button,
   Flex,
   HStack,
   Link,
-  Spacer,
-  Text,
 } from "@chakra-ui/react";
-import { FaMedal } from "react-icons/fa";
-import { useTheme } from "next-themes";
+import { LuTrendingUp } from "react-icons/lu";
 
 export function Header() {
-  // Theme toggle (next-themes)
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const current = resolvedTheme ?? theme;
-
-  const toggleTheme = () => {
-    setTheme(current === "dark" ? "light" : "dark");
-  };
-
   return (
     <Box
       position="sticky"
@@ -28,6 +16,9 @@ export function Header() {
       borderBottomWidth="1px"
       bg="bg/80"
       backdropFilter="blur(8px)"
+      style={{
+        background: "#A22A2E",
+      }}
     >
       <Flex h="14" align="center" px={{ base: 4, md: 6 }} gap="3">
         {/* Brand */}
@@ -35,37 +26,20 @@ export function Header() {
           <Box
             w="8"
             h="8"
-            borderRadius="lg"
-            bg="fg"
-            color="bg"
             display="grid"
             placeItems="center"
-            fontWeight="bold"
+            fontSize="3xl"
+            color="white"
           >
-            <FaMedal />
+            <LuTrendingUp />
           </Box>
 
           <Box lineHeight="1.3">
-            <Link asChild fontWeight="semibold">
+            <Link asChild fontWeight="semibold" color="white" fontSize="2xl">
               <RouterLink to="/">ELEVATE</RouterLink>
             </Link>
-            <Text fontSize="xs" color="fg.muted" fontStyle="italic">
-              Elévate con la fuerza de tu impulso
-            </Text>
           </Box>
         </HStack>
-
-        <Spacer />
-
-        {/* Theme toggle (mobile + desktop) */}
-        <Button
-          onClick={toggleTheme}
-          variant="ghost"
-          size="lg"
-          aria-label="Cambiar tema"
-        >
-          {current === "dark" ? "☀️" : "🌙"}
-        </Button>
       </Flex>
     </Box>
   );

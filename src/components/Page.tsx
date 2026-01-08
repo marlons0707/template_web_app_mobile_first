@@ -14,7 +14,7 @@ export type PageCrumb = {
 };
 
 type Props = {
-  title: string;
+  title?: string;
   subtitle?: string;
   breadcrumbs?: PageCrumb[];
   actions?: ReactNode;
@@ -35,7 +35,6 @@ export function Page({
         align="start"
         justify="space-between"
         gap="4"
-        mb="4"
         wrap="wrap"
         flexShrink={0}
       >
@@ -66,9 +65,11 @@ export function Page({
             </Breadcrumb.Root>
             ) : null}
 
+          {title ? (
           <Heading size="md" lineClamp={1}>
             {title}
           </Heading>
+          ) : null}
 
           {subtitle ? (
             <Text mt="1" fontSize="sm" color="fg.muted" lineClamp={2}>

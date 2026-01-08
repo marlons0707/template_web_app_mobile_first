@@ -42,8 +42,7 @@ export function Levels() {
 
   return (
     <Page
-      title=""
-      subtitle=""
+      title="Niveles"
     >
       <VStack gap={1} align="stretch" py={2} px={1} pb={1}>
         {/* Ascenso / Timeline */}

@@ -1,18 +1,16 @@
+import { LuLayoutDashboard, LuTrophy, LuCalendarDays, LuSettings } from "react-icons/lu";
+import type { IconType } from "react-icons";
+
 export type MenuItem = {
   to: string;
   label: string;
-  icon: string;
+  icon: IconType;
   end?: boolean;
 };
 
-export const primaryMenuItems: MenuItem[] = [
-  { to: "/", label: "Progreso", icon: "📊", end: true },
-  { to: "/levels", label: "Niveles", icon: "🏆" },
-  { to: "/users", label: "Periodos", icon: "📅" },
-];
-
-export const secondaryMenuItems: MenuItem[] = [
-  { to: "/settings", label: "Ajustes", icon: "⚙️" },
-  { to: "/help", label: "Ayuda", icon: "❓" },
-  { to: "/about", label: "Acerca de", icon: "ℹ️" },
+export const menuItems: MenuItem[] = [
+  { to: "/", label: "Progreso", icon: LuLayoutDashboard, end: true },
+  { to: "/levels", label: "Niveles", icon: LuTrophy },
+  { to: "/users", label: "Periodos", icon: LuCalendarDays },
+  { to: "/settings", label: "Ajustes", icon: LuSettings },
 ];
