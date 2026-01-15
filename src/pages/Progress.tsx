@@ -239,7 +239,7 @@ export function Progress() {
                         color={levelConfig.textColor}
                         style={{ textShadow: levelConfig.textShadow }}
                       >
-                        Wilmer Contreras
+                        Josué Saravia
                       </Text>
                       <Text 
                         mt={6}
@@ -312,7 +312,7 @@ export function Progress() {
                   <Box
                     p="3"
                     borderRadius="lg"
-                    bg="#A22A2E"
+                    bg="blue.600"
                     color="white"
                     fontSize="2xl"
                   >
@@ -322,8 +322,8 @@ export function Progress() {
                     <Text fontSize="sm" fontWeight="medium" color="fg.muted">
                       Hoy llevas
                     </Text>
-                    <Text fontSize="2xl" fontWeight="bold" color="#A22A2E">
-                      +120 pts
+                    <Text fontSize="2xl" fontWeight="bold" color="blue.600">
+                      +90 pts
                     </Text>
                   </VStack>
                 </HStack>
@@ -337,7 +337,7 @@ export function Progress() {
                   <Box
                     p="3"
                     borderRadius="lg"
-                    bg="#A22A2E"
+                    bg="green.600"
                     color="white"
                     fontSize="2xl"
                   >
@@ -347,8 +347,8 @@ export function Progress() {
                     <Text fontSize="sm" fontWeight="medium" color="fg.muted">
                       Último logro
                     </Text>
-                    <Text fontSize="lg" fontWeight="bold" color="#A22A2E">
-                      +300 pts por asistencia perfecta
+                    <Text fontSize="lg" fontWeight="bold" color="green.600">
+                      +100 pts por asistencia y puntualidad perfecta
                     </Text>
                   </VStack>
                 </HStack>

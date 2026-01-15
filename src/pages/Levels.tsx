@@ -85,15 +85,6 @@ export function Levels() {
                     {/* Columna izquierda: ícono sobre la línea */}
                     <Box width="64px" position="relative" display="flex" alignItems="center" justifyContent="center">
                       {/* Fondo blanco detrás del ícono para darle contraste */}
-                      <Box
-                        position="absolute"
-                        left="32px"
-                        transform="translateX(-50%)"
-                        bg="white"
-                        borderRadius="full"
-                        boxSize={`${isCurrent ? 104 : 80}px`}
-                        zIndex={1}
-                      />
                       <Image
                         src={lvl.icon}
                         alt={lvl.key}
