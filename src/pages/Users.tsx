@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { Page } from "@/components/Page";
 
 export function Users() {

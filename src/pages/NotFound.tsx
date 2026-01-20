@@ -8,8 +8,8 @@ export function NotFound() {
       <Text mt="2" color="fg.muted">
         Ruta no encontrada.
       </Text>
-      <Link as={RouterLink} to="/" mt="3" display="inline-block">
-        Volver al inicio
+      <Link asChild mt="3" display="inline-block" color="blue.500" textDecoration="underline" _hover={{ color: "blue.600" }}>
+        <RouterLink to="/">Volver al inicio</RouterLink>
       </Link>
     </Box>
   );
